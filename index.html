@@ -40,7 +40,7 @@
     var ctx = canvas.getContext('2d');
     var wW = window.innerWidth;
     var wH = window.innerHeight;
-    var num = 100; //红心的数量
+    var num = 50; //红心的数量
     var heartImage = new Image();   //创建一个新的image对象
 
     heartImage.onload = render;
@@ -77,7 +77,7 @@
         this.initialH = 410;
         this.initialW*.3;
         this.initialH*.3;
-        this.targetScal = Math.random() * .2 + .15;  //最终大小缩放比例
+        this.targetScal = Math.random() * .1 + .15;  //最终大小缩放比例
         this.scale = this.targetScal * Math.random();
 
     }
@@ -115,7 +115,7 @@
     }
         function getApple(){
             function isOk(){
-            var isLove = confirm("    Do You Love Me? \n\n‘Yes’请点击确定");
+            var isLove = confirm("Do You Love Me? \n\n‘Yes’请点击确定");
                 if(isLove == true){
                     alert('送你一个苹果,么么哒！点击确定领取');
                     heartImage.src = './apple.gif';
