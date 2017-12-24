@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>小宝宝圣诞快乐</title>
+    <meta name="KeyWords" content="myHearts">
+    <meta name="Description" content="liuyiliang_wuwenyuan">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1" />
+    <link href="./favicon.ico" rel="shortcut icon">
+    <style>
+        *{margin: 0; padding: 0;}
+        body {
+            background: url(./background.jpg) no-repeat;
+            background-size: 100% 100%;
+            voerflow: hidden;
+        }
+        EMBED{
+            position: fixed;
+            visibility: hidden;
+        }
+        h1 {
+            width: 450px;
+            font-family: "华文行楷";
+            font-size: 60px;
+            color: #fff;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 5%;
+            margin-left: -225px;
+        }
+    </style>
+</head>
+<body>
+<canvas></canvas>
+<EMBED src="http://music.163.com/outchain/player?type=2&id=399341109&auto=1&height=66" autostart="true" loop="true">
+<h1>圣诞快乐</br>Merry Christmas</h1>
+<script>
+    var canvas = document.querySelector('canvas');
+    var ctx = canvas.getContext('2d');
+    var wW = window.innerWidth;
+    var wH = window.innerHeight;
+    var num = 100; //红心的数量
+    var heartImage = new Image();   //创建一个新的image对象
+
+    heartImage.onload = render;
+    window.onload = getApple;
+    var hearts=[]; //心的数组
+    init(); //运行初始化函数
+
+    function init (){ //初始化画布的大小
+        canvas.width = wW;
+        canvas.height = wH;
+        for(var i=0; i<num; i++){
+            hearts.push(new Heart());
+        }
+//        heartImage.src = "./1.png";
+        window.addEventListener('resize', function(){
+            wW = window.innerWidth;
+            wH = window.innerHeight;
+        });
+    }
+
+    setTimeout("heartImage.src = './0.png';", 10000)
+    setTimeout("heartImage.src = './2.png';", 20000)
+    setTimeout("heartImage.src = './1.png';", 30000)
+    function Heart(){   //构造函数
+        this.x = Math.random() * wW;
+        this.y = Math.random() * wH;
+        this.opacity = Math.random() * .5 + .5;
+        this.vel = {   //位移参数 移动量和方向
+            x: (Math.random()-.5) * 4,
+            y: (Math.random()-.5) * 4
+        };
+        heartImage.src = './heart.svg';
+        this.initialW = 470;
+        this.initialH = 410;
+        this.initialW*.3;
+        this.initialH*.3;
+        this.targetScal = Math.random() * .2 + .15;  //最终大小缩放比例
+        this.scale = this.targetScal * Math.random();
+
+    }
+        Heart.prototype.update = function(){
+            this.x += this.vel.x;
+            this.y += this.vel.y;
+
+            if(this.x - this.width > wW || this.x + this.width < 0){
+                this.scale = 0; //重置缩放值
+                this.x = Math.random() * wW;
+                this.y = Math.random() * wH;
+            }
+
+            this.scale += (this.targetScal - this.scale) * .1; //慢慢放大
+            this.width = this.scale * this.initialW;
+            this.height = this.scale * this.initialH;
+            };
+
+        Heart.prototype.draw = function(){
+            ctx.globalAlpha = this.opacity;
+            ctx.drawImage(heartImage, this.x, this.y, this.width, this.height)
+        };
+
+    var nHeart = new Heart();
+    function render(){ //渲染函数
+            ctx.clearRect(0, 0, wW, wH); //清空画布
+            for(var i=0; i<num; i++){
+                hearts[i].update();
+                hearts[i].draw();
+            }
+            nHeart.update();
+            nHeart.draw(); //对象的绘制方法
+
+            requestAnimationFrame(render);
+    }
+        function getApple(){
+            function isOk(){
+            var isLove = confirm("    Do You Love Me? \n\n‘Yes’请点击确定");
+                if(isLove == true){
+                    alert('送你一个苹果,么么哒！点击确定领取');
+                    heartImage.src = './apple.gif';
+                    location.href = '#';
+                }else{
+                    var reIsLove = confirm("哼，你居然选了取消，再给你次机会重新选择\n\n" +
+                        " Do You Love Me? \n\n‘Yes’请点击确定")
+                    if (reIsLove == true){
+                        alert('这才是我的好宝宝嘛 mua，送你一个苹果,么么哒！点击确定领取');
+                        heartImage.src = './apple.gif';
+                        location.href = '#';
+                    }else{
+                        alert("o_0")
+                    }
+                }
+            }
+            setTimeout(isOk,40000);
+        }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
